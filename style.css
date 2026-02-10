@@ -81,7 +81,7 @@ h1 {
 }
 
 .question {
-    font-size: 1.5em;
+    font-size: 1.4em;
     color: #333;
     margin: 30px 0;
     font-weight: bold;
@@ -91,9 +91,8 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 150px;
     margin-top: 40px;
-    position: relative;
-    min-height: 100px;
 }
 
 button {
@@ -111,23 +110,17 @@ button {
 #yesBtn {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-180px);
     transition: all 0.3s ease;
 }
 
 #yesBtn:hover {
-    transform: translateX(-180px) scale(1.1);
+    transform: scale(1.1);
     box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
 }
 
 #noBtn {
     background: linear-gradient(135deg, #a8a8a8 0%, #7f7f7f 100%);
     color: white;
-    position: absolute;
-    left: 50%;
-    transform: translateX(80px);
 }
 
 /* Strona sukcesu */

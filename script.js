@@ -3,19 +3,46 @@ const yesBtn = document.getElementById('yesBtn');
 const questionPage = document.getElementById('questionPage');
 const successPage = document.getElementById('successPage');
 
+let initialized = false;
+
+function initButton() {
+    if (initialized) return;
+    initialized = true;
+
+    // Wstawiamy niewidoczny placeholder o tym samym rozmiarze co noBtn
+    // żeby yesBtn nie przesuwał się po tym jak noBtn wypada z flow
+    const placeholder = document.createElement('div');
+    placeholder.style.width  = noBtn.offsetWidth  + 'px';
+    placeholder.style.height = noBtn.offsetHeight + 'px';
+    placeholder.style.flexShrink = '0';
+    noBtn.parentNode.insertBefore(placeholder, noBtn);
+
+    // Pobieramy aktualną pozycję przycisku na ekranie
+    const rect = noBtn.getBoundingClientRect();
+
+    // Ustawiamy fixed BEZ transition, dokładnie w tym samym miejscu
+    noBtn.style.transition = 'none';
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = rect.left + 'px';
+    noBtn.style.top  = rect.top  + 'px';
+    noBtn.style.transform = 'none';
+
+    // Wymuszamy reflow żeby przeglądarka "zapamiętała" nową pozycję przed transition
+    noBtn.getBoundingClientRect();
+
+    // Dopiero teraz włączamy transition
+    noBtn.style.transition = 'left 0.3s ease, top 0.3s ease';
+}
+
 // Funkcja do przesunięcia przycisku "No" w losowe miejsce
 function moveButton() {
-    const maxX = window.innerWidth - 200;
-    const maxY = window.innerHeight - 100;
-    
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-    
-    noBtn.style.position = 'fixed';
-    noBtn.style.left = randomX + 'px';
-    noBtn.style.top = randomY + 'px';
-    noBtn.style.transform = 'none';
-    noBtn.style.transition = 'all 0.3s ease';
+    initButton();
+
+    const maxX = window.innerWidth - noBtn.offsetWidth - 10;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 10;
+
+    noBtn.style.left = (Math.random() * maxX) + 'px';
+    noBtn.style.top  = (Math.random() * maxY) + 'px';
 }
 
 // Event listener na najechanie myszką
