@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Animowane serduszka w tle */
+.heart-bg {
+    position: fixed;
+    font-size: 80px;
+    opacity: 0.3;
+    animation: float 15s infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-50px) rotate(10deg); }
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px 80px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 90%;
+    position: relative;
+    animation: slideIn 0.8s ease-out;
+    margin: 0 auto;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gif-container {
+    margin: 30px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+.gif-container img {
+    max-width: 400px;
+    height: auto;
+    display: block;
+}
+
+h1 {
+    font-size: 2em;
+    color: #e91e63;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.question {
+    font-size: 1.4em;
+    color: #333;
+    margin: 30px 0;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    position: relative;
+    min-height: 100px;
+}
+
+button {
+    padding: 20px 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#yesBtn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-180px);
+    transition: all 0.3s ease;
+}
+
+#yesBtn:hover {
+    transform: translateX(-180px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+}
+
+#noBtn {
+    background: linear-gradient(135deg, #a8a8a8 0%, #7f7f7f 100%);
+    color: white;
+    position: absolute;
+    left: 50%;
+    transform: translateX(80px);
+}
+
+/* Strona sukcesu */
+.success-page {
+    display: none;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.success-page h1 {
+    font-size: 3em;
+    color: #e91e63;
+}
+
+.success-page p {
+    font-size: 1em;
+    color: #555;
+    margin: 20px 0;
+}
+
+/* Konfetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #f093fb;
+    position: absolute;
+    animation: confetti-fall 3s linear infinite;
+}
+
+@keyframes confetti-fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
