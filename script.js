@@ -3,7 +3,7 @@ const yesBtn       = document.getElementById('yesBtn');
 const questionPage = document.getElementById('questionPage');
 const successPage  = document.getElementById('successPage');
 
-/* ─── "No" button — runs away from the cursor ───────────────────────────── */
+/* ─── "No" button — runs away on hover (desktop) and on click (all devices) ── */
 
 let initialized = false;
 
@@ -41,20 +41,22 @@ function initButton() {
 }
 
 function moveButton() {
-    const maxX = window.innerWidth  - noBtn.offsetWidth  - 10;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 10;
+    const margin = 10;
+    const maxX   = window.innerWidth  - noBtn.offsetWidth  - margin;
+    const maxY   = window.innerHeight - noBtn.offsetHeight - margin;
 
-    noBtn.style.left = (Math.random() * maxX) + 'px';
-    noBtn.style.top  = (Math.random() * maxY) + 'px';
+    noBtn.style.left = Math.max(margin, Math.random() * maxX) + 'px';
+    noBtn.style.top  = Math.max(margin, Math.random() * maxY) + 'px';
 }
 
 // First hover only initializes — does not move the button
 noBtn.addEventListener('mouseenter', initButton, { once: true });
 
-// Mobile: tap moves the button to a random position
-noBtn.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    moveButton();
+// Click / tap — initialize if needed, then escape
+noBtn.addEventListener('click', () => {
+    if (!initialized) initButton();
+    // Small delay so initButton's reflow settles before we animate away
+    setTimeout(moveButton, 20);
 });
 
 /* ─── "Yes" button ───────────────────────────────────────────────────────── */
@@ -69,8 +71,10 @@ yesBtn.addEventListener('click', () => {
 
 function createConfetti() {
     const hearts = ['❤️', '🩷', '💜', '💙', '💛', '🧡', '💗', '💖', '💝'];
+    // Reduce count on low-end / small screens to stay smooth
+    const count  = window.innerWidth < 480 ? 50 : 100;
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < count; i++) {
         setTimeout(() => {
             const el = document.createElement('div');
             el.className   = 'confetti';

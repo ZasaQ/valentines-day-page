@@ -9,6 +9,7 @@ body {
     font-family: 'Comic Sans MS', 'Arial', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     min-height: 100vh;
+    min-height: 100dvh; /* dynamic viewport height — fixes mobile browser chrome */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,25 +20,27 @@ body {
 .container {
     text-align: center;
     background: rgba(255, 255, 255, 0.95);
-    padding: 60px 80px;
+    padding: 40px 30px;
     border-radius: 30px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     max-width: 800px;
     width: 90%;
     position: relative;
     animation: slideIn 0.8s ease-out;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .gif-container {
-    margin: 30px auto;
+    margin: 20px auto;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     display: inline-block;
+    max-width: 100%;
 }
 
 .gif-container img {
+    width: 100%;
     max-width: 400px;
     height: auto;
     display: block;
@@ -45,17 +48,17 @@ body {
 
 /* ─── Typography ─────────────────────────────────────────────────────────── */
 h1 {
-    font-size: 2em;
+    font-size: clamp(1.3em, 5vw, 2em);
     color: #e91e63;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     animation: pulse 2s ease-in-out infinite;
 }
 
 .question {
-    font-size: 1.4em;
+    font-size: clamp(1em, 4vw, 1.4em);
     color: #333;
-    margin: 30px 0;
+    margin: 20px 0;
     font-weight: bold;
 }
 
@@ -64,13 +67,14 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 150px;
-    margin-top: 40px;
+    gap: clamp(30px, 10vw, 150px);
+    margin-top: 30px;
+    flex-wrap: wrap;
 }
 
 button {
-    padding: 20px 50px;
-    font-size: 1.2em;
+    padding: clamp(14px, 3vw, 20px) clamp(30px, 6vw, 50px);
+    font-size: clamp(0.9em, 3vw, 1.2em);
     font-weight: bold;
     border: none;
     border-radius: 50px;
@@ -78,6 +82,8 @@ button {
     text-transform: uppercase;
     letter-spacing: 2px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    touch-action: manipulation; /* prevents 300ms tap delay on mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 #yesBtn {
@@ -94,7 +100,7 @@ button {
 #noBtn {
     background: linear-gradient(135deg, #a8a8a8 0%, #7f7f7f 100%);
     color: white;
-    /* Position managed by JS after the first mouseenter */
+    /* Position managed by JS after the first mouseenter / touchstart */
 }
 
 /* ─── Success page ───────────────────────────────────────────────────────── */
@@ -104,20 +110,20 @@ button {
 }
 
 .success-page h1 {
-    font-size: 3em;
+    font-size: clamp(1.8em, 7vw, 3em);
     color: #e91e63;
 }
 
 .success-page p {
-    font-size: 1em;
+    font-size: clamp(1em, 4vw, 2em);
     color: #555;
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 /* ─── Background hearts ──────────────────────────────────────────────────── */
 .heart-bg {
     position: fixed;
-    font-size: 80px;
+    font-size: clamp(40px, 8vw, 80px);
     opacity: 0.3;
     animation: float 15s infinite;
     pointer-events: none;
@@ -163,4 +169,59 @@ button {
     0%   { transform: translateY(0) rotate(0deg);       opacity: 1; }
     90%  {                                               opacity: 1; }
     100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ─── Tablet (≥600px) ────────────────────────────────────────────────────── */
+@media (min-width: 600px) {
+    .container {
+        padding: 50px 60px;
+    }
+}
+
+/* ─── Desktop (≥900px) ───────────────────────────────────────────────────── */
+@media (min-width: 900px) {
+    .container {
+        padding: 60px 80px;
+    }
+}
+
+/* ─── Very small screens (≤360px) ───────────────────────────────────────── */
+@media (max-width: 360px) {
+    .container {
+        padding: 25px 15px;
+        border-radius: 20px;
+    }
+
+    .button-container {
+        gap: 20px;
+    }
+}
+
+/* ─── Landscape phones ───────────────────────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+
+    .container {
+        margin: 10px auto;
+        padding: 20px 30px;
+    }
+
+    .gif-container img {
+        max-width: 200px;
+    }
+
+    h1 {
+        margin-bottom: 8px;
+    }
+
+    .question {
+        margin: 10px 0;
+    }
+
+    .button-container {
+        margin-top: 15px;
+    }
 }
