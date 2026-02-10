@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
 body {
     font-family: 'Comic Sans MS', 'Arial', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
@@ -13,20 +14,6 @@ body {
     align-items: center;
     overflow: hidden;
     position: relative;
-}
-
-/* Animowane serduszka w tle */
-.heart-bg {
-    position: fixed;
-    font-size: 80px;
-    opacity: 0.3;
-    animation: float 15s infinite;
-    pointer-events: none;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-50px) rotate(10deg); }
 }
 
 .container {
@@ -40,17 +27,6 @@ body {
     position: relative;
     animation: slideIn 0.8s ease-out;
     margin: 0 auto;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .gif-container {
@@ -67,17 +43,13 @@ body {
     display: block;
 }
 
+/* ─── Typography ─────────────────────────────────────────────────────────── */
 h1 {
     font-size: 2em;
     color: #e91e63;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
 }
 
 .question {
@@ -87,6 +59,7 @@ h1 {
     font-weight: bold;
 }
 
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
 .button-container {
     display: flex;
     justify-content: center;
@@ -121,17 +94,13 @@ button {
 #noBtn {
     background: linear-gradient(135deg, #a8a8a8 0%, #7f7f7f 100%);
     color: white;
+    /* Position managed by JS after the first mouseenter */
 }
 
-/* Strona sukcesu */
+/* ─── Success page ───────────────────────────────────────────────────────── */
 .success-page {
     display: none;
     animation: fadeIn 1s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 
 .success-page h1 {
@@ -145,11 +114,21 @@ button {
     margin: 20px 0;
 }
 
-/* Konfetti – kluczowe poprawki:
-   - position: fixed  →  koordynaty względem okna przeglądarki, nie dokumentu
-   - top: -20px       →  startujemy tuż nad górą ekranu (ustawiane przez JS)
-   - animacja przesuwa element o 100vh w dół, czyli przez cały ekran
-*/
+/* ─── Background hearts ──────────────────────────────────────────────────── */
+.heart-bg {
+    position: fixed;
+    font-size: 80px;
+    opacity: 0.3;
+    animation: float 15s infinite;
+    pointer-events: none;
+}
+
+/* ─── Confetti ───────────────────────────────────────────────────────────── */
+
+/*
+ * position: fixed — coordinates relative to the viewport, not the document
+ * top: -20px      — spawn point just above the top edge (left/size set by JS)
+ */
 .confetti {
     position: fixed;
     top: -20px;
@@ -159,16 +138,29 @@ button {
     animation: confetti-fall linear forwards;
 }
 
+/* ─── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%       { transform: translateY(-50px) rotate(10deg); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-50px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.05); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 @keyframes confetti-fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(110vh) rotate(720deg);
-        opacity: 0;
-    }
+    0%   { transform: translateY(0) rotate(0deg);       opacity: 1; }
+    90%  {                                               opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
