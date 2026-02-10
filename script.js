@@ -9,44 +9,45 @@ function initButton() {
     if (initialized) return;
     initialized = true;
 
-    // Wstawiamy niewidoczny placeholder o tym samym rozmiarze co noBtn
-    // żeby yesBtn nie przesuwał się po tym jak noBtn wypada z flow
+    // Placeholder żeby yesBtn nie skakał gdy noBtn wypada z flow
     const placeholder = document.createElement('div');
-    placeholder.style.width  = noBtn.offsetWidth  + 'px';
-    placeholder.style.height = noBtn.offsetHeight + 'px';
+    placeholder.style.width      = noBtn.offsetWidth  + 'px';
+    placeholder.style.height     = noBtn.offsetHeight + 'px';
     placeholder.style.flexShrink = '0';
     noBtn.parentNode.insertBefore(placeholder, noBtn);
 
-    // Pobieramy aktualną pozycję przycisku na ekranie
+    // Zakotwiczamy przycisk w dokładnie tym samym miejscu — BEZ transition
     const rect = noBtn.getBoundingClientRect();
-
-    // Ustawiamy fixed BEZ transition, dokładnie w tym samym miejscu
     noBtn.style.transition = 'none';
-    noBtn.style.position = 'fixed';
-    noBtn.style.left = rect.left + 'px';
-    noBtn.style.top  = rect.top  + 'px';
-    noBtn.style.transform = 'none';
+    noBtn.style.position   = 'fixed';
+    noBtn.style.left       = rect.left + 'px';
+    noBtn.style.top        = rect.top  + 'px';
+    noBtn.style.transform  = 'none';
 
-    // Wymuszamy reflow żeby przeglądarka "zapamiętała" nową pozycję przed transition
+    // Reflow — przeglądarka "zatwierdza" pozycję startową
     noBtn.getBoundingClientRect();
 
-    // Dopiero teraz włączamy transition
+    // Włączamy transition dopiero PO zatwierdzeniu pozycji startowej
     noBtn.style.transition = 'left 0.3s ease, top 0.3s ease';
+
+    // Dodajemy moveButton dopiero po zakończeniu bieżącego eventu,
+    // żeby to samo mouseenter które wywołało init nie odpaliło od razu move
+    setTimeout(() => {
+        noBtn.addEventListener('mouseenter', moveButton);
+    }, 0);
 }
 
 // Funkcja do przesunięcia przycisku "No" w losowe miejsce
 function moveButton() {
-    initButton();
-
-    const maxX = window.innerWidth - noBtn.offsetWidth - 10;
+    const maxX = window.innerWidth  - noBtn.offsetWidth  - 10;
     const maxY = window.innerHeight - noBtn.offsetHeight - 10;
 
     noBtn.style.left = (Math.random() * maxX) + 'px';
     noBtn.style.top  = (Math.random() * maxY) + 'px';
 }
 
-// Event listener na najechanie myszką
-noBtn.addEventListener('mouseenter', moveButton);
+// Pierwsze mouseenter tylko inicjalizuje (nie przesuwa)
+noBtn.addEventListener('mouseenter', initButton, { once: true });
 
 // Event listener na dotknięcie (mobile)
 noBtn.addEventListener('touchstart', (e) => {
