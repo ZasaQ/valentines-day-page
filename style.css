@@ -107,17 +107,24 @@ button {
 .success-page {
     display: none;
     animation: fadeIn 1s ease-in;
+    /* Never taller than the viewport — scrolls internally if needed */
+    max-height: 90dvh;
+    overflow-y: auto;
 }
 
 .success-page h1 {
-    font-size: clamp(1.8em, 7vw, 3em);
+    font-size: clamp(1.4em, 5vw, 2.4em);
     color: #e91e63;
 }
 
-.success-page p {
-    font-size: clamp(1em, 4vw, 2em);
-    color: #555;
-    margin: 15px 0;
+.success-page .gif-container img {
+    max-width: min(280px, 60vw);
+}
+
+.success-text {
+    font-size: clamp(0.95em, 3.5vw, 1.4em);
+    color: #333;
+    margin: 10px 0;
 }
 
 /* ─── Background hearts ──────────────────────────────────────────────────── */
