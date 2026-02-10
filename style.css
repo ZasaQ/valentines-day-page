@@ -81,7 +81,7 @@ h1 {
 }
 
 .question {
-    font-size: 1.4em;
+    font-size: 1.5em;
     color: #333;
     margin: 30px 0;
     font-weight: bold;
@@ -152,18 +152,30 @@ button {
     margin: 20px 0;
 }
 
-/* Konfetti */
+/* Konfetti – kluczowe poprawki:
+   - position: fixed  →  koordynaty względem okna przeglądarki, nie dokumentu
+   - top: -20px       →  startujemy tuż nad górą ekranu (ustawiane przez JS)
+   - animacja przesuwa element o 100vh w dół, czyli przez cały ekran
+*/
 .confetti {
     position: fixed;
-    width: 10px;
-    height: 10px;
-    background: #f093fb;
-    position: absolute;
-    animation: confetti-fall 3s linear infinite;
+    top: -20px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    animation: confetti-fall linear forwards;
 }
 
 @keyframes confetti-fall {
-    to {
-        transform: translateY(100vh) rotate(360deg);
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
     }
 }
